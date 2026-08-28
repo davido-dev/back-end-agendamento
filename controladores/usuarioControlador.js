@@ -32,8 +32,9 @@ async function consultarUsuarioPorId(req, res) {
 }
 
 async function consultarUsuarioPorCpf(req, res) {
+  const cpf = req.params.cpf;
   try {
-    const usuario = await Usuario.findByPk(req.params.cpf);
+    const usuario = await Usuario.findOne({ where: { cpf: cpf } });
     if (!usuario) {
       return res.status(404).json({ erro: 'Usuário não encontrado' });
     }
@@ -45,15 +46,18 @@ async function consultarUsuarioPorCpf(req, res) {
 }
 
 async function editarUsuario(req, res) {
+  const id = req.params.id
+  console.log(id)
   try {
     const usuario = await Usuario.findByPk(req.params.id);
     if (!usuario) {
       return res.status(404).json({ erro: 'Usuário não encontrado' });
     }
 
-    await Usuario.update(req.body);
+    await usuario.update(req.body);
     res.status(200).json(usuario);
   } catch (erro) {
+    console.log(erro)
     res.status(500).json({ erro: erro.message });
   }
 }
@@ -79,11 +83,11 @@ async function usuarioLogin(req, res) {
     const usuario = await Usuario.findOne({ where: { email } });
 
     if (!usuario) {
-      return res.status(400);
+      return res.status(400).json({mensagem: "Usuário ou senha errados"})
     }
 
     if (senha != usuario.senha) {
-      return res.status(400);
+      return res.status(400).json({mensagem: "Usuário ou senha errados"})
     }
 
     res.status(200).json(usuario);
