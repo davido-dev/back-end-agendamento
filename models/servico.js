@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+
 const sequelize = require('../banco-de-dados/conexao.js');
 
 const Servico = sequelize.define(
@@ -9,25 +10,25 @@ const Servico = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
+
     nome: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
+
     descricao: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    duracao_minutos: {
-      type: DataTypes.INTEGER,
+
+    tamanho: {
+      type: DataTypes.STRING(50),
       allowNull: false,
     },
-    valor: {
+
+    valor_estimado: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
-    },
-    status: {
-      type: DataTypes.STRING(20),
-      defaultValue: 'ATIVO',
     },
   },
   {

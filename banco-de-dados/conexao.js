@@ -2,7 +2,7 @@
 const { Sequelize } = require('sequelize');
 
 // Cria uma nova conexão com o banco de dados
-const sequelize = new Sequelize('pet_show', 'root', 'root', {
+const sequelize = new Sequelize('star_studio', 'root', 'root', {
 
   // Endereço do servidor do banco
   host: 'localhost',
