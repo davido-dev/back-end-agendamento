@@ -6,6 +6,7 @@ exports.criarUsuario = async (req, res) => {
     const usuario = await Usuario.create(req.body);
     res.status(201).json(usuario);
   } catch (erro) {
+    console.log(erro)
     res.status(500).json({ erro: erro.message });
   }
 };
@@ -83,5 +84,41 @@ exports.deletarUsuario = async (req, res) => {
     res.json({ mensagem: 'Usuário removido' });
   } catch (erro) {
     res.status(500).json({ erro: erro.message });
+  }
+};
+
+// Login
+exports.login = async (req, res) => {
+  try {
+    const { email, senha } = req.body;
+
+    if (!email || !senha) {
+      return res.status(400).json({
+        erro: "Email e senha são obrigatórios."
+      });
+    }
+
+    const usuario = await Usuario.findOne({
+      where: {
+        email,
+        senha
+      }
+    });
+
+    if (!usuario) {
+      return res.status(401).json({
+        erro: "Email ou senha inválidos."
+      });
+    }
+
+    res.status(200).json({
+      mensagem: "Login realizado com sucesso.",
+      usuario
+    });
+
+  } catch (erro) {
+    res.status(500).json({
+      erro: erro.message
+    });
   }
 };

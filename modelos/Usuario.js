@@ -36,8 +36,9 @@ const Usuario = sequelize.define(
     },
 
     tipo: {
-      type: DataTypes.ENUM('CLIENTE', 'ADMIN'),
+      type: DataTypes.ENUM('CLIENTE', 'ADMIN', 'PROFISSIONAL'),
       allowNull: false,
+      defaultValue: 'CLIENTE'
     },
 
     status: {

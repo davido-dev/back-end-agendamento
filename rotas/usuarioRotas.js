@@ -10,4 +10,6 @@ roteador.post('/usuarios', usuarioControlador.criarUsuario);
 roteador.put('/usuarios/:id', usuarioControlador.atualizarUsuario);
 roteador.delete('/usuarios/:id', usuarioControlador.deletarUsuario);
 
+roteador.post('/login', usuarioControlador.login);
+
 module.exports = roteador;
