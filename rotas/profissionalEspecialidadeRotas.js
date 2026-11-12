@@ -9,24 +9,18 @@ const {
 
 const router = express.Router();
 
-router.post(
-  '/profissional-especialidade',
-  criarProfissionalEspecialidade
-);
+router.post('/profissional-especialidade', criarProfissionalEspecialidade);
 
-router.get(
-  '/profissional-especialidade',
-  consultarProfissionaisEspecialidades
-);
+router.get('/profissional-especialidade', consultarProfissionaisEspecialidades);
 
 router.get(
   '/profissional-especialidade/:id_profissional/:id_especialidade',
-  consultarProfissionalEspecialidadePorId
+  consultarProfissionalEspecialidadePorId,
 );
 
 router.delete(
   '/profissional-especialidade/:id_profissional/:id_especialidade',
-  excluirProfissionalEspecialidade
+  excluirProfissionalEspecialidade,
 );
 
 module.exports = router;

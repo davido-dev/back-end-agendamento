@@ -1,19 +1,24 @@
 const express = require('express');
+const router = express.Router();
 
-const roteador = express.Router();
+const petControlador = require('../controladores/petControlador');
 
-const petControlador = require('../controladores/petControlador.js');
+// Criar pet
+router.post('/pets', petControlador.criarPet);
 
-roteador.get('/pets', petControlador.obterPets);
+// Listar todos os pets
+router.get('/pets', petControlador.obterPets);
 
-roteador.get('/pets/:id', petControlador.obterPetPorId);
+// Buscar pets por ID do usuário
+router.get('/pets/usuario/:id_usuario', petControlador.obterPetsPorIdUsuario);
 
-roteador.get('/pets/usuario/:id_usuario', petControlador.buscarPetsPorUsuario);
+// Buscar pet por ID
+router.get('/pets/:id', petControlador.obterPetPorId);
 
-roteador.post('/pets', petControlador.criarPet);
+// Atualizar pet
+router.put('/pets/:id', petControlador.atualizarPet);
 
-roteador.put('/pets/:id', petControlador.atualizarPet);
+// Deletar pet
+router.delete('/pets/:id', petControlador.deletarPet);
 
-roteador.delete('/pets/:id', petControlador.deletarPet);
-
-module.exports = roteador;
+module.exports = router;

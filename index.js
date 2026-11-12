@@ -18,6 +18,8 @@ const especialidadeRotas = require('./rotas/especialidadeRotas');
 const petRotas = require('./rotas/petRotas');
 const servicoRotas = require('./rotas/servicoRotas');
 const profissionalEspecialidadeRotas = require('./rotas/profissionalEspecialidadeRotas');
+const agendamentoRotas = require('./rotas/agendamentoRotas');
+const pagamentoRotas = require('./rotas/pagamentoRotas');
 
 // Inicializa conexão com banco
 require('./banco-de-dados/conexao');
@@ -32,6 +34,8 @@ app.use('/api', especialidadeRotas);
 app.use('/api', petRotas);
 app.use('/api', servicoRotas);
 app.use('/api', profissionalEspecialidadeRotas);
+app.use('/api', agendamentoRotas);
+app.use('/api', pagamentoRotas);
 
 // Servidor
 app.listen(3000, () => {

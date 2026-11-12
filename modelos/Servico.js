@@ -10,6 +10,15 @@ const Servico = sequelize.define(
       primaryKey: true,
     },
 
+    id_especialidade: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'especialidades',
+        key: 'id_especialidade',
+      },
+    },
+
     nome: {
       type: DataTypes.STRING(100),
       allowNull: true,
@@ -38,7 +47,7 @@ const Servico = sequelize.define(
   {
     tableName: 'servicos',
     timestamps: false,
-  }
+  },
 );
 
 module.exports = Servico;

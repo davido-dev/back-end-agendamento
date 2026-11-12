@@ -1,64 +1,47 @@
-const Pet = require('../modelos/Pet');
-const Usuario = require('../modelos/Usuario');
+const Pet = require('../modelos/pet');
 
 // Criar pet
 exports.criarPet = async (req, res) => {
   try {
     const { nome, tipo, raca, idade, id_usuario } = req.body;
 
-    // Validação dos campos obrigatórios
-    if (!nome || !tipo || !raca || idade === undefined || !id_usuario) {
+    if (!nome || !tipo || idade === undefined || !id_usuario) {
       return res.status(400).json({
-        erro: 'Nome, tipo, raça, idade e id_usuario são obrigatórios.'
+        erro: 'Nome, tipo, idade e usuário são obrigatórios.',
       });
     }
 
-    // Verifica se o usuário existe
-    const usuario = await Usuario.findByPk(id_usuario);
-
-    if (!usuario) {
-      return res.status(404).json({
-        erro: 'Usuário não encontrado.'
-      });
-    }
-
-    // Cria o pet
     const pet = await Pet.create({
       nome,
       tipo,
       raca,
       idade,
-      id_usuario
+      id_usuario,
     });
 
     res.status(201).json(pet);
-
   } catch (erro) {
     console.error(erro);
 
     res.status(500).json({
-      erro: erro.message
+      erro: erro.message,
     });
   }
 };
-
 
 // Listar todos os pets
 exports.obterPets = async (req, res) => {
   try {
     const pets = await Pet.findAll();
-
     res.json(pets);
-
   } catch (erro) {
     console.error(erro);
 
     res.status(500).json({
-      erro: erro.message
+      erro: erro.message,
     });
   }
 };
-
 
 // Buscar pet por ID
 exports.obterPetPorId = async (req, res) => {
@@ -67,47 +50,34 @@ exports.obterPetPorId = async (req, res) => {
 
     if (!pet) {
       return res.status(404).json({
-        erro: 'Pet não encontrado.'
+        erro: 'Pet não encontrado.',
       });
     }
 
     res.json(pet);
-
   } catch (erro) {
     console.error(erro);
 
     res.status(500).json({
-      erro: erro.message
+      erro: erro.message,
     });
   }
 };
 
 
-// Buscar pets por usuário
-exports.buscarPetsPorUsuario = async (req, res) => {
+exports.obterPetsPorIdUsuario = async (req, res) => {
   try {
     const { id_usuario } = req.params;
-
-    // Verifica se o usuário existe
-    const usuario = await Usuario.findByPk(id_usuario);
-
-    if (!usuario) {
-      return res.status(404).json({
-        erro: 'Usuário não encontrado.'
-      });
-    }
 
     const pets = await Pet.findAll({
       where: { id_usuario }
     });
 
-    res.json(pets);
-
-  } catch (erro) {
-    console.error(erro);
-
-    res.status(500).json({
-      erro: erro.message
+    return res.status(200).json(pets);
+  } catch (error) {
+    return res.status(500).json({
+      erro: 'Erro ao buscar pets',
+      detalhes: error.message
     });
   }
 };
@@ -120,16 +90,15 @@ exports.atualizarPet = async (req, res) => {
 
     if (!pet) {
       return res.status(404).json({
-        erro: 'Pet não encontrado.'
+        erro: 'Pet não encontrado.',
       });
     }
 
-    const { nome, tipo, raca, idade } = req.body;
+    const { nome, tipo, raca, idade, id_usuario } = req.body;
 
-    // Validação dos campos obrigatórios
-    if (!nome || !tipo || !raca || idade === undefined) {
+    if (!nome || !tipo || idade === undefined || !id_usuario) {
       return res.status(400).json({
-        erro: 'Nome, tipo, raça e idade são obrigatórios.'
+        erro: 'Nome, tipo, idade e usuário são obrigatórios.',
       });
     }
 
@@ -137,20 +106,19 @@ exports.atualizarPet = async (req, res) => {
       nome,
       tipo,
       raca,
-      idade
+      idade,
+      id_usuario,
     });
 
     res.json(pet);
-
   } catch (erro) {
     console.error(erro);
 
     res.status(500).json({
-      erro: erro.message
+      erro: erro.message,
     });
   }
 };
-
 
 // Deletar pet
 exports.deletarPet = async (req, res) => {
@@ -159,21 +127,20 @@ exports.deletarPet = async (req, res) => {
 
     if (!pet) {
       return res.status(404).json({
-        erro: 'Pet não encontrado.'
+        erro: 'Pet não encontrado.',
       });
     }
 
     await pet.destroy();
 
     res.json({
-      mensagem: 'Pet removido com sucesso.'
+      mensagem: 'Pet removido com sucesso.',
     });
-
   } catch (erro) {
     console.error(erro);
 
     res.status(500).json({
-      erro: erro.message
+      erro: erro.message,
     });
   }
 };
